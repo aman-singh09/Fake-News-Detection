@@ -7,7 +7,6 @@ app = Flask(__name__, template_folder="../frontend/template")
 def getNews(title):
     vectorization = pickle.load(open('../fakeNewsAlgo/vectorizer.sav', 'rb'))
     title = vectorization.transform([title])
-    print(title)
     filename = '../fakeNewsAlgo/multinomialNB.sav'
     MNB = pickle.load(open(filename, 'rb'))
     filename = '../fakeNewsAlgo/logisticRegression.sav'
@@ -19,9 +18,7 @@ def getNews(title):
     filename = '../fakeNewsAlgo/DecisionTree.sav'
     DT = pickle.load(open(filename, 'rb'))
 
-    print("coming here...", type(title))
     MNB_predict = MNB.predict(title)
-    print("sdlkgnsdlg")
     LR_predict = LR.predict(title)
     KNN_predict = KNN.predict(title)
     PA_predict = PA.predict(title)

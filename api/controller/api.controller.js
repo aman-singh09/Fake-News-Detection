@@ -21,8 +21,8 @@ const pushFormDetails = (req, res, next) => {
     }
     request(options, (error, response, body) => {
         console.log("Making request");
-        // console.log(body.data.Authenticity)
-        res.render('results', {body: body})
+        console.log(body.data.Authenticity)
+        res.render('results', {body: body.data.Authenticity})
     });
     // res.status(200).json(obj)
 }
