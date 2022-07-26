@@ -18,19 +18,18 @@ def getNews(title):
     filename = '../fakeNewsAlgo/DecisionTree.sav'
     DT = pickle.load(open(filename, 'rb'))
 
-    MNB_predict = MNB.predict(title)
-    LR_predict = LR.predict(title)
-    KNN_predict = KNN.predict(title)
-    PA_predict = PA.predict(title)
-    DT_predict = DT.predict(title)
+    LR_predict = LR.predict(title)[0]
+    MNB_predict = MNB.predict(title)[0]
+    KNN_predict = KNN.predict(title)[0]
+    PA_predict = PA.predict(title)[0]
+    DT_predict = DT.predict(title)[0]
     comparisonList = [MNB_predict, LR_predict, KNN_predict, PA_predict, DT_predict]
-
-    true_freq = comparisonList.count(True)
-    false_freq = comparisonList.count(False)
+    true_freq = comparisonList.count(1)
+    false_freq = comparisonList.count(0)
     if true_freq > false_freq:
-        return True
+        return "True"
     else:
-        return False
+        return "False"
 
 
 @app.route('/')
@@ -44,10 +43,10 @@ def base():
     data = request.get_json()
     data = json.dumps(data)
     data_load = json.loads(data)
-    newstitle = data_load['newsId']['title']
+    newstitle = data_load['newsId']['description']
     print("in route")
     result = getNews(newstitle)
-    print("getting result")
+    print("getting result",result)
     solutions = {
         'title': newstitle,
         'Authenticity': result,
